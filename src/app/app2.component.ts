@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AppService }   from './app.service';
+import { AppService } from './app.service';
 
 
 @Component({
@@ -9,25 +9,23 @@ import { AppService }   from './app.service';
   <span *ngIf="eventReceived">Event received</span>`
 })
 export class App2Component {
-  @Input() message: string = "Not set";
+  @Input() message = 'Not set';
   private eventHub: any;
-  public eventReceived: boolean = false;
+  public eventReceived = false;
 
   constructor(public service: AppService){
 
   }
 
-  setEventHub(hub: any){
+  setEventHub(hub: any): void {
     this.eventHub = hub;
-    //Register your events here
-
-    this.eventHub.on("someEvent", ()=>{
+    this.eventHub.on('someEvent', () => {
       this.eventReceived = true;
     });
   }
 
-  onClick(){
+  onClick(): void {
     this.service.add();
-    this.message = "Clicked !";
+    this.message = 'Clicked !';
   }
 }

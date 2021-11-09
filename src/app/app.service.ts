@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AppService {
-  public count: number = 0;
+  public count = 0;
 
-  public add(){
+  public add(): void {
     this.count = this.count + 1;
   }
 }

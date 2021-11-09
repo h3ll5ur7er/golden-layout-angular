@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { AppService }   from './app.service';
+import { EventHub } from 'golden-layout';
+import { AppService } from './app.service';
 
 
 @Component({
@@ -10,34 +11,31 @@ import { AppService }   from './app.service';
   <span *ngIf="eventReceived">Event received</span>`
 })
 export class AppComponent implements OnInit, OnDestroy {
-  @Input() message: string = "Not set";
-  private eventHub: any;
-  public eventReceived: boolean = false;
-  public inputValue = "initial value";
+  @Input() message = 'Not set';
+  private eventHub!: EventHub;
+  public eventReceived = false;
+  public inputValue = 'initial value';
 
-  constructor(public service: AppService){
+  constructor(public service: AppService){ }
 
-  }
-
-  setEventHub(hub: any){
+  setEventHub(hub: EventHub): void {
     this.eventHub = hub;
-    //Register your events here
 
-    this.eventHub.on("someEvent", ()=>{
+    this.eventHub.on('userBroadcast', () => {
       this.eventReceived = true;
     });
   }
 
-  onClick(){
+  onClick(): void {
     this.service.add();
-    this.message = "Clicked !";
+    this.message = 'Clicked !';
   }
 
-  ngOnInit() {
-    console.log("OnInit");
+  ngOnInit(): void {
+    console.log('OnInit');
   }
 
-  ngOnDestroy() {
-    console.log("OnDestroy");
+  ngOnDestroy(): void {
+    console.log('OnDestroy');
   }
 }

@@ -13,11 +13,11 @@ import {GoldenLayout} from 'golden-layout';
   entryComponents: [AppComponent, App2Component]
 })
 export class GLComponent implements AfterViewInit {
-  @ViewChild('layout') private layoutHost?: ElementRef = undefined;
-  private layout?: GoldenLayout = undefined;
+  @ViewChild('layout') private layoutHost!: ElementRef;
+  private layout!: GoldenLayout;
   private config: any;
 
-  constructor(private el: ElementRef, private viewContainer: ViewContainerRef,
+  constructor(private viewContainer: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver){
     this.config = {
             content: [{
@@ -49,13 +49,13 @@ export class GLComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
-    this.layout = new GoldenLayout(this.config, this.layoutHost?.nativeElement);
+    this.layout = new GoldenLayout(this.layoutHost.nativeElement);
 
     this.layout?.registerComponentFactoryFunction('test1', (container: any, componentState: any) => {
           const factory = this.componentFactoryResolver.resolveComponentFactory(AppComponent);
 
           const compRef = this.viewContainer.createComponent(factory);
-          compRef.instance.setEventHub(this?.layout?.eventHub);
+          compRef.instance.setEventHub(this.layout.eventHub);
           compRef.instance.message = componentState.message;
           container.getElement().append(compRef.location.nativeElement);
 
@@ -68,7 +68,7 @@ export class GLComponent implements AfterViewInit {
           const factory = this.componentFactoryResolver.resolveComponentFactory(App2Component);
 
           const compRef = this.viewContainer.createComponent(factory);
-          compRef.instance.setEventHub(this?.layout?.eventHub);
+          compRef.instance.setEventHub(this.layout.eventHub);
           compRef.instance.message = componentState.message;
           container.getElement().append(compRef.location.nativeElement);
 
@@ -77,7 +77,7 @@ export class GLComponent implements AfterViewInit {
           compRef.changeDetectorRef.detectChanges();
     });
 
-    this.layout?.init();
+    this.layout?.loadLayout(this.config);
 
     this.layout.on('itemDestroyed', (item: any) => {
       if (item.container != null) {
@@ -98,7 +98,7 @@ export class GLComponent implements AfterViewInit {
 
   sendEvent(): void{
     if (this.layout) {
-      // this.layout.eventHub.emit('someEvent');
+      this.layout.eventHub.emit('userBroadcast');
     }
   }
 }
