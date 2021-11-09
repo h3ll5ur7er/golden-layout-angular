@@ -2,9 +2,11 @@ import {
   Component, ComponentFactoryResolver, HostListener,
   ViewContainerRef, ElementRef, ViewChild, AfterViewInit
 } from '@angular/core';
+
+import {GoldenLayout, LayoutConfig, ComponentItemConfig, RootItemConfig, RowOrColumnItemConfig} from 'golden-layout';
+
 import {AppComponent} from 'src/app/app.component';
 import {App2Component} from 'src/app/app2.component';
-import {GoldenLayout} from 'golden-layout';
 
 @Component({
   selector: 'golden-layout',
@@ -15,37 +17,44 @@ import {GoldenLayout} from 'golden-layout';
 export class GLComponent implements AfterViewInit {
   @ViewChild('layout') private layoutHost!: ElementRef;
   private layout!: GoldenLayout;
-  private config: any;
+  private config: LayoutConfig;
 
   constructor(private viewContainer: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver){
+
+    const panel1:ComponentItemConfig = {
+      type: 'component',
+      componentName: 'test1',
+      componentType: 'test1',
+      componentState: { message: 'Top Left' }
+    };
+    const panel2:ComponentItemConfig = {
+      type: 'component',
+      componentName: 'test2',
+      componentType: 'test2',
+      componentState: { message: 'Top Right' }
+
+    };
+    const panel3:ComponentItemConfig = {
+      type: 'component',
+      componentName: 'test1',
+      componentType: 'test1',
+      componentState: { message: 'Bottom Right' }
+
+    };
+    const root:RowOrColumnItemConfig = {
+      type: 'row',
+      content: [{
+        type: 'row',
+        content: [panel1, {
+          type: 'column',
+          content: [panel2, panel3]
+        }]
+      }]
+    };
     this.config = {
-            content: [{
-                type: 'row',
-                content: [{
-                    type: 'component',
-                    componentName: 'test1',
-                    componentState: {
-                      message: 'Top Left'
-                    }
-                }, {
-                        type: 'column',
-                        content: [{
-                            type: 'component',
-                            componentName: 'test2',
-                            componentState: {
-                              message: 'Top Right'
-                            }
-                        }, {
-                                type: 'component',
-                                componentName: 'test1',
-                                componentState: {
-                                  message: 'Bottom Right'
-                                }
-                            }]
-                    }]
-            }]
-        };
+      root,
+    };
   }
 
   ngAfterViewInit(): void{

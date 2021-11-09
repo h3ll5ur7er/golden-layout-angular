@@ -2,7 +2,6 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { EventHub } from 'golden-layout';
 import { AppService } from './app.service';
 
-
 @Component({
   selector: 'my-app',
   template: `<h1>{{message}} - {{service.count}}</h1><br/>

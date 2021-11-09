@@ -1,3 +1,4 @@
+import { EventHub } from 'golden-layout';
 import { Component, Input } from '@angular/core';
 import { AppService } from './app.service';
 
@@ -10,14 +11,14 @@ import { AppService } from './app.service';
 })
 export class App2Component {
   @Input() message = 'Not set';
-  private eventHub: any;
+  private eventHub!: EventHub;
   public eventReceived = false;
 
   constructor(public service: AppService) { }
 
-  setEventHub(hub: any): void {
+  setEventHub(hub: EventHub): void {
     this.eventHub = hub;
-    this.eventHub.on('someEvent', () => {
+    this.eventHub.on('userBroadcast', () => {
       this.eventReceived = true;
     });
   }
