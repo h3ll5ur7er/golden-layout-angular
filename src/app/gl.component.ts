@@ -1,6 +1,6 @@
 import {
-  Component, ComponentFactoryResolver, HostListener, ComponentFactory, ComponentRef,
-  ViewContainerRef, ReflectiveInjector, ElementRef, ViewChild, AfterViewInit
+  Component, ComponentFactoryResolver, HostListener,
+  ViewContainerRef, ElementRef, ViewChild, AfterViewInit
 } from '@angular/core';
 import {AppComponent} from 'src/app/app.component';
 import {App2Component} from 'src/app/app2.component';
@@ -90,10 +90,12 @@ export class GLComponent implements AfterViewInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
-      if (this.layout) {
-        this.layout?.setSize(event.target.innerWidth, event.target.innerHeight);
-      }
+  onResize(event: Event): void {
+    if (this.layout) {
+      this.layout?.setSize(
+        (event?.target as Window)?.innerWidth,
+        (event?.target as Window)?.innerHeight);
+    }
   }
 
   sendEvent(): void{
