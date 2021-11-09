@@ -116,9 +116,21 @@
               "devServerTarget": "layout-mgr:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "layout-mgr"
+  "defaultProject": "layout-mgr",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

@@ -13,9 +13,7 @@ export class App2Component {
   private eventHub: any;
   public eventReceived = false;
 
-  constructor(public service: AppService){
-
-  }
+  constructor(public service: AppService) { }
 
   setEventHub(hub: any): void {
     this.eventHub = hub;
